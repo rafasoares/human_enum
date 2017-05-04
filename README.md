@@ -1,6 +1,6 @@
 # HumanEnum
 
-This gem allows you to specify enum value translations like any other ActiveRecord attrubute and adds helper methods to get humanized translations of enum values
+This gem allows you to specify enum value translations in your I18n locale files like any other ActiveRecord attribute and adds helper methods to get humanized translations of enum values.
 
 ## Installation
 
