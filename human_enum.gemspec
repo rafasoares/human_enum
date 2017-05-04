@@ -9,9 +9,11 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Rafael Soares"]
   spec.email         = ["rafasoaresms@gmail.com"]
 
-  spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = %q{Adds simple and easy I18n support for Rails enums}
+  spec.description   = %q{This gem allows you to specify enum value translations
+    like any other ActiveRecord attrubute and adds helper methods to get
+    humanized translations of enum values}
+  spec.homepage      = "https://github.com/rafasoares/human_enum"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
@@ -33,4 +35,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.14"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"
+
+  spec.add_dependency "activerecord",  '> 5.0.0'
 end
