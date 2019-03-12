@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{Adds simple and easy I18n support for Rails enums}
   spec.description   = %q{This gem allows you to specify enum value translations
-    like any other ActiveRecord attrubute and adds helper methods to get
+    like any other ActiveRecord attribute and adds helper methods to get
     humanized translations of enum values}
   spec.homepage      = "https://github.com/rafasoares/human_enum"
   spec.license       = "MIT"
