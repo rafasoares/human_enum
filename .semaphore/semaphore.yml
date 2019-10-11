@@ -36,6 +36,7 @@ blocks:
         commands:
           - checkout
           - cache restore
+          - gem install bundler -v $BUNDLER_VERSION
           - bundle install -j 4 --path vendor/bundle
   - name: Unit tests
     task:
@@ -43,6 +44,7 @@ blocks:
         commands:
           - checkout
           - cache restore
+          - gem install bundler -v $BUNDLER_VERSION
           - bundle install -j 4 --path vendor/bundle
       jobs:
         - name: RSpec
