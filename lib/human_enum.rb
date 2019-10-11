@@ -1,7 +1,9 @@
 require "human_enum/version"
 require 'active_support/concern'
 require 'active_support/core_ext/array'
+require 'active_model/naming'
 require 'active_model/translation'
+require 'active_record/type'
 require 'active_record/enum'
 
 module HumanEnum
