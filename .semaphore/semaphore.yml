@@ -13,10 +13,14 @@ blocks:
       jobs:
         - name: bundle
           commands:
-            - checkout
-            - cache restore
-            - sem-version ruby 2.6.4
             - bundle install --deployment -j 4 --path vendor/bundle
+      prologue:
+        commands:
+          - checkout
+          - cache restore
+      epilogue:
+        on_pass:
+          commands:
             - cache store
   - name: Code scanning
     task:
@@ -28,7 +32,6 @@ blocks:
         commands:
           - checkout
           - cache restore
-          - sem-version ruby 2.6.4
           - bundle install --deployment --path vendor/bundle
   - name: Unit tests
     task:
@@ -36,7 +39,6 @@ blocks:
         commands:
           - checkout
           - cache restore
-          - sem-version ruby 2.6.4
           - bundle install --deployment --path vendor/bundle
       jobs:
         - name: RSpec
