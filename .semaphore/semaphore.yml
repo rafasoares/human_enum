@@ -13,7 +13,7 @@ blocks:
       jobs:
         - name: bundle
           commands:
-            - bundle install --deployment -j 4 --path vendor/bundle
+            - bundle install -j 4 --path vendor/bundle
       prologue:
         commands:
           - checkout
@@ -32,14 +32,12 @@ blocks:
         commands:
           - checkout
           - cache restore
-          - bundle install --deployment --path vendor/bundle
   - name: Unit tests
     task:
       prologue:
         commands:
           - checkout
           - cache restore
-          - bundle install --deployment --path vendor/bundle
       jobs:
         - name: RSpec
           commands:
