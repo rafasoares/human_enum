@@ -7,6 +7,9 @@ agent:
   containers:
     - name: main
       image: 'ruby:2.6.4'
+      env_vars:
+        - name: BUNDLER_VERSION
+          value: 2.0.2
 blocks:
   - name: Setup
     task:
