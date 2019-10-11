@@ -1,4 +1,6 @@
-require "human_enum/version"
+# frozen_string_literal: true
+
+require 'human_enum/version'
 require 'active_support/concern'
 require 'active_support/core_ext/array'
 require 'active_model/naming'
@@ -6,18 +8,23 @@ require 'active_model/translation'
 require 'active_record/type'
 require 'active_record/enum'
 
+# # About Human Enum
+# Human Enum allows you to easily translate `enum` values in [ActiveRecord]
+# models
+
+# [ActiveRecord]: https://api.rubyonrails.org/v5.2.3/classes/ActiveRecord/Enum.html
 module HumanEnum
   extend ActiveSupport::Concern
 
   included do
-    def human_enum_value enum_name
+    def human_enum_value(enum_name)
       enum_value = send enum_name
       self.class.human_enum_value(enum_name, enum_value) unless enum_value.nil?
     end
   end
 
   class_methods do
-    def enum definitions
+    def enum(definitions)
       super definitions
 
       definitions.keys.without(:_prefix, :_suffix).each do |name|
@@ -25,7 +32,7 @@ module HumanEnum
       end
     end
 
-    def human_enum_value enum_name, enum_value
+    def human_enum_value(enum_name, enum_value)
       attributes_scope = "#{i18n_scope}.attributes"
       enum_key = "#{enum_name.to_s.pluralize}.#{enum_value}"
 
@@ -39,14 +46,14 @@ module HumanEnum
       I18n.translate defaults.shift, default: defaults
     end
 
-    def human_enum enum_name
+    def human_enum(enum_name)
       send :define_method, "human_#{enum_name}" do
         human_enum_value enum_name
       end
 
       collection_name = enum_name.to_s.pluralize
       self.class.send :define_method, "human_#{collection_name}" do
-        self.human_enum_value enum_name, nil
+        human_enum_value enum_name, nil
       end
     end
   end
