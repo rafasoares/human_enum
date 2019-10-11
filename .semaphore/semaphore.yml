@@ -21,6 +21,7 @@ blocks:
         commands:
           - checkout
           - cache restore
+          - gem install bundler -v $BUNDLER_VERSION
       epilogue:
         on_pass:
           commands:
