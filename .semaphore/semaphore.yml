@@ -7,6 +7,9 @@ agent:
   containers:
     - name: main
       image: 'ruby:2.6.4'
+      env_vars:
+        - name: BUNDLER_VERSION
+          value: 2.0.2
 blocks:
   - name: Setup
     task:
@@ -18,6 +21,7 @@ blocks:
         commands:
           - checkout
           - cache restore
+          - gem install bundler -v $BUNDLER_VERSION
       epilogue:
         on_pass:
           commands:
@@ -32,6 +36,7 @@ blocks:
         commands:
           - checkout
           - cache restore
+          - gem install bundler -v $BUNDLER_VERSION
           - bundle install -j 4 --path vendor/bundle
   - name: Unit tests
     task:
@@ -39,6 +44,7 @@ blocks:
         commands:
           - checkout
           - cache restore
+          - gem install bundler -v $BUNDLER_VERSION
           - bundle install -j 4 --path vendor/bundle
       jobs:
         - name: RSpec
