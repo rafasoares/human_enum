@@ -1,0 +1,46 @@
+version: v1.0
+name: Human Enum
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+  containers:
+    - name: main
+      image: 'ruby:2.6.4'
+blocks:
+  - name: Setup
+    task:
+      jobs:
+        - name: bundle
+          commands:
+            - bundle install -j 4 --path vendor/bundle
+      prologue:
+        commands:
+          - checkout
+          - cache restore
+      epilogue:
+        on_pass:
+          commands:
+            - cache store
+  - name: Code scanning
+    task:
+      jobs:
+        - name: check style + security
+          commands:
+            - bundle exec rubocop
+      prologue:
+        commands:
+          - checkout
+          - cache restore
+          - bundle install -j 4 --path vendor/bundle
+  - name: Unit tests
+    task:
+      prologue:
+        commands:
+          - checkout
+          - cache restore
+          - bundle install -j 4 --path vendor/bundle
+      jobs:
+        - name: RSpec
+          commands:
+            - bundle exec rake spec
