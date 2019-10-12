@@ -17,6 +17,10 @@ Gem::Specification.new do |spec|
   spec.homepage      = 'https://github.com/rafasoares/human_enum'
   spec.license       = 'MIT'
 
+  spec.metadata['homepage_uri'] = spec.homepage
+  spec.metadata['source_code_uri'] = 'https://github.com/rafasoares/human_enum'
+  spec.metadata['changelog_uri'] = 'https://github.com/rafasoares/human_enum/blob/master/CHANGELOG.md'
+
   spec.files = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features)/})
   end

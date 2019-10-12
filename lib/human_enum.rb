@@ -14,6 +14,8 @@ require 'active_record/enum'
 
 # [ActiveRecord]: https://api.rubyonrails.org/v5.2.3/classes/ActiveRecord/Enum.html
 module HumanEnum
+  class Error < StandardError; end
+
   extend ActiveSupport::Concern
 
   included do
