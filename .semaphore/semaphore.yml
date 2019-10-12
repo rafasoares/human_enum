@@ -16,7 +16,7 @@ blocks:
       jobs:
         - name: bundle
           commands:
-            - bundle install -j 4 --path vendor/bundle
+            - bundle install --deployment -j 4 --path vendor/bundle
       prologue:
         commands:
           - checkout
@@ -29,7 +29,7 @@ blocks:
   - name: Code scanning
     task:
       jobs:
-        - name: check style + security
+        - name: check style
           commands:
             - bundle exec rubocop
       prologue:
@@ -37,7 +37,7 @@ blocks:
           - checkout
           - cache restore
           - gem install bundler -v $BUNDLER_VERSION
-          - bundle install -j 4 --path vendor/bundle
+          - bundle install --deployment --path vendor/bundle
   - name: Unit tests
     task:
       prologue:
@@ -45,7 +45,7 @@ blocks:
           - checkout
           - cache restore
           - gem install bundler -v $BUNDLER_VERSION
-          - bundle install -j 4 --path vendor/bundle
+          - bundle install --deployment --path vendor/bundle
       jobs:
         - name: RSpec
           commands:
