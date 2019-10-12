@@ -1,0 +1,7 @@
+en:
+  activerecord:
+    attributes:
+      test_model:
+        my_enums:
+          value: Custom value
+          other_value: Other custom value
