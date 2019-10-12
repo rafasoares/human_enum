@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 class TestModel < ActiveRecord::Base
   include HumanEnum
 
