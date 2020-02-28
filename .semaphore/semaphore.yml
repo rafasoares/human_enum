@@ -19,14 +19,13 @@ blocks:
             - bundle install --deployment -j 4 --path vendor/bundle
       prologue:
         commands:
-          - cache restore
+          - checkout
           - gem install bundler -v $BUNDLER_VERSION
       epilogue:
         on_pass:
           commands:
             - cache store
-    dependencies:
-      - Checkout
+    dependencies: []
   - name: Code scanning
     task:
       jobs:
@@ -55,14 +54,3 @@ blocks:
             - bundle exec rake spec
     dependencies:
       - Setup
-  - name: Checkout
-    dependencies: []
-    task:
-      epilogue:
-        always:
-          commands:
-            - cache store
-      jobs:
-        - name: 'Job #1'
-          commands:
-            - checkout
