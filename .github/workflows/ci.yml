@@ -1,0 +1,39 @@
+name: Continuous Integration
+
+on:
+  push: [master, develop]
+  pull_request: [master, develop]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-ruby@v1
+      with:
+        ruby-version: '2.6'
+    - uses: actions/cache@v1
+      with:
+        path: vendor/bundle
+        key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-gems-
+    - name: Bundle install
+      run: |
+        bundle config deployment true
+        bundle config without development test
+        bundle config path vendor/bundle
+        bundle install --jobs 4 --retry 3
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - bundle exec rake spec
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - bundle exec rubocop
