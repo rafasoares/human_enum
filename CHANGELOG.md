@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.1.3
+No code changes, just changing our CI
+
 ## 0.1.2
 Adding proper specs and improving the quality of the gem
 
