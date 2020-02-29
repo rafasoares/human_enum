@@ -21,6 +21,8 @@ jobs:
         key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
         restore-keys: |
           ${{ runner.os }}-gems-
+    - name: Update Bundler
+      run: gem install bundler:2.0.2
     - name: Bundle install
       run: |
         bundle config deployment true
