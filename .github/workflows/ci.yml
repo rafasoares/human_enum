@@ -23,6 +23,8 @@ jobs:
           ${{ runner.os }}-gems-
     - name: Update Bundler
       run: gem install bundler:2.0.2
+    - name: Setup SQLite
+      run: sudo apt-get install libsqlite3-dev
     - name: Bundle install
       run: |
         bundle config deployment true
