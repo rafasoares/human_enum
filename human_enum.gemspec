@@ -36,6 +36,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rubocop-performance', '~> 1.5'
   spec.add_development_dependency 'rubocop-rspec', '~> 1.36'
 
+  spec.add_development_dependency 'reek', '~> 5.6.0'
+
   spec.add_development_dependency 'guard', '~> 2.15'
   spec.add_development_dependency 'guard-rspec', '~> 4.7'
   spec.add_development_dependency 'guard-rubocop', '~> 1.3'
