@@ -64,4 +64,4 @@ jobs:
         env:
           GIT_BRANCH: ${{steps.extract_branch.outputs.branch}}
           GIT_COMMIT_SHA: $GITHUB_SHA
-        run: ./cc-test-reporter after-build
+        run: ./cc-test-reporter after-build -t simplecov
