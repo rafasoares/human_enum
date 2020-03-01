@@ -1,2 +1,11 @@
 rubocop:
   version: 0.72.0
+
+reek:
+  enabled: true
+  version: 5.6.0
+
+jshint:
+  enabled: false
+
+fail_on_violations: true
