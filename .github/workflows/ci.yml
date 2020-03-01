@@ -2,7 +2,7 @@ name: Tests
 
 on:
   push:
-    branches: [master, develop, feature/workflows]
+    branches: [master, develop]
   pull_request:
     branches: [master, develop]
 
@@ -44,6 +44,7 @@ jobs:
     env:
       CC_TEST_REPORTER_ID: ${{ secrets.CODECLIMATE_TESTER_ID }}
     steps:
+      - uses: actions/checkout@v2
       - name: Extract branch name
         id: extract_branch
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
