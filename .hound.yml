@@ -3,3 +3,5 @@ rubocop:
 
 reek:
   version: 5.6.0
+
+fail_on_violations: true
