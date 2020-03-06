@@ -2,6 +2,8 @@
 
 This gem allows you to specify enum value translations in your I18n locale files like any other ActiveRecord attribute and adds helper methods to get humanized translations of enum values.
 
+![tests](https://github.com/rafasoares/human_enum/workflows/Continuous%20Integration/badge.svg)
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -85,4 +87,3 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/rafaso
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
