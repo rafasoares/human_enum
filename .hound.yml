@@ -1,9 +1,6 @@
 rubocop:
   version: 0.72.0
 
-reek:
-  enabled: true
-  version: 5.0.2
 
 jshint:
   enabled: false
