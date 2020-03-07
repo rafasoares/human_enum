@@ -2,7 +2,7 @@
 
 This gem allows you to specify enum value translations in your I18n locale files like any other ActiveRecord attribute and adds helper methods to get humanized translations of enum values.
 
-![tests](https://github.com/rafasoares/human_enum/workflows/Continuous%20Integration/badge.svg)
+![Tests](https://github.com/rafasoares/human_enum/workflows/Tests/badge.svg)
 
 ## Installation
 
