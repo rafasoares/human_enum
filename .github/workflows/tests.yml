@@ -1,0 +1,67 @@
+name: Tests
+
+on:
+  push:
+    branches: [master, develop]
+  pull_request:
+    branches: [master, develop]
+
+jobs:
+  rspec:
+    name: RSpec
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-ruby@v1
+      with:
+        ruby-version: '2.6'
+    - uses: actions/cache@v1
+      with:
+        path: vendor/bundle
+        key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-gems-
+    - name: Update Bundler
+      run: gem install bundler:2.0.2
+    - name: Setup SQLite
+      run: sudo apt-get install libsqlite3-dev
+    - name: Bundle install
+      run: |
+        bundle config deployment true
+        bundle config path vendor/bundle
+        bundle install --jobs 4 --retry 3
+    - name: Run specs
+      run: bundle exec rake spec
+    - uses: actions/upload-artifact@v1.0.0
+      with:
+        name: code-coverage
+        path: coverage
+
+  coverage:
+    name: Code Coverage
+    needs: rspec
+    runs-on: ubuntu-latest
+    env:
+      CC_TEST_REPORTER_ID: ${{ secrets.CODECLIMATE_TESTER_ID }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Extract branch name
+        id: extract_branch
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+      - name: Download and setup Code Climate Test Reporter
+        env:
+          GIT_BRANCH: ${{steps.extract_branch.outputs.branch}}
+          GIT_COMMIT_SHA: $GITHUB_SHA
+        run: |
+          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+          chmod +x ./cc-test-reporter
+          ./cc-test-reporter before-build
+      - uses: actions/download-artifact@v1.0.0
+        with:
+          name: code-coverage
+          path: coverage
+      - name: Upload coverage report to Code Climate
+        env:
+          GIT_BRANCH: ${{steps.extract_branch.outputs.branch}}
+          GIT_COMMIT_SHA: $GITHUB_SHA
+        run: ./cc-test-reporter after-build -t simplecov --debug
