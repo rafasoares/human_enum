@@ -47,11 +47,13 @@ jobs:
       - uses: actions/checkout@v2
       - name: Extract branch name
         id: extract_branch
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        env:
+          branch: ${{ github.head_ref || github.ref }}
+        run: echo "##[set-output name=branch;]$(echo ${branch#refs/heads/})"
       - name: Download and setup Code Climate Test Reporter
         env:
           GIT_BRANCH: ${{steps.extract_branch.outputs.branch}}
-          GIT_COMMIT_SHA: ${{ env.GITHUB_SHA }}
+          GIT_COMMIT_SHA: ${{ github.sha }}
         run: |
           curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
           chmod +x ./cc-test-reporter
@@ -63,5 +65,5 @@ jobs:
       - name: Upload coverage report to Code Climate
         env:
           GIT_BRANCH: ${{steps.extract_branch.outputs.branch}}
-          GIT_COMMIT_SHA: ${{ env.GITHUB_SHA }}
+          GIT_COMMIT_SHA: ${{ github.sha }}
         run: ./cc-test-reporter after-build -t simplecov --debug
