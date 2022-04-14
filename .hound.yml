@@ -1,6 +1,5 @@
 rubocop:
-  version: 0.72.0
-
+  version: 1.27.0
 
 jshint:
   enabled: false

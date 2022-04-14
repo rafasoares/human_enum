@@ -1,18 +1,18 @@
 # frozen_string_literal: true
 
-require 'human_enum/version'
-require 'active_support/concern'
-require 'active_support/core_ext/array'
-require 'active_model/naming'
-require 'active_model/translation'
-require 'active_record/type'
-require 'active_record/enum'
+require "human_enum/version"
+require "active_support/concern"
+require "active_support/core_ext/array"
+require "active_model/naming"
+require "active_model/translation"
+require "active_record/type"
+require "active_record/enum"
 
 # # About Human Enum
 # Human Enum allows you to easily translate `enum` values in [ActiveRecord]
 # models
 
-# [ActiveRecord]: https://api.rubyonrails.org/v5.2.3/classes/ActiveRecord/Enum.html
+# [ActiveRecord]: https://api.rubyonrails.org/classes/ActiveRecord/Enum.html
 module HumanEnum
   class Error < StandardError; end
 
