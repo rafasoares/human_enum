@@ -127,7 +127,7 @@ DEPENDENCIES
   rake (~> 13.0)
   reek (~> 6.1)
   rspec (~> 3.0)
-  rubocop (~> 1.27)
+  rubocop (~> 1.23)
   rubocop-performance (~> 1.13)
   rubocop-rake (~> 0.6.0)
   rubocop-rspec (~> 2.9)
