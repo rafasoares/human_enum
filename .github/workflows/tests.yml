@@ -42,7 +42,7 @@ jobs:
     needs: rspec
     runs-on: ubuntu-latest
     env:
-      CC_TEST_REPORTER_ID: ${{ secrets.CODECLIMATE_TESTER_ID }}
+      CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
     steps:
       - uses: actions/checkout@v2
       - name: Extract branch name
