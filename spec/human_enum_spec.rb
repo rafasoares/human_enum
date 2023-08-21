@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'setup_helper'
+
 class TestModel < ActiveRecord::Base
   include HumanEnum
 
@@ -8,7 +10,7 @@ end
 
 RSpec.describe HumanEnum do
   it 'has a version number' do
-    expect(HumanEnum::VERSION).not_to be nil
+    expect(HumanEnum::VERSION).not_to be_nil
   end
 
   context 'when included' do
@@ -21,7 +23,7 @@ RSpec.describe HumanEnum do
     it { is_expected.to respond_to :human_enum_value }
   end
 
-  describe 'Model class method' do
+  describe 'Model class methods' do
     subject(:values) { TestModel.human_my_enums }
 
     let(:expected_values) do
@@ -40,7 +42,7 @@ RSpec.describe HumanEnum do
     subject { TestModel.new(params).human_my_enum }
 
     context 'with a blank value' do
-      let(:params) {}
+      let(:params) { {} }
 
       it { is_expected.to be_nil }
     end

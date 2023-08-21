@@ -1,29 +1,46 @@
-name: Ruby Gem
+name: Publish gem
 
 on:
   push:
     branches:
-      - master
+      - main
+    paths:
+      - lib/human_enum/version.rb
+
+permissions:
+  packages: write
+  contents: read
 
 jobs:
-  build:
-    name: Build + Publish
+  tests:
+    uses: ./.github/workflows/tests.yml
+
+  publish:
     runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@master
-    - name: Set up Ruby 2.6
-      uses: ruby/setup-ruby@v1
-      with:
-        version: 3.2
+    needs: tests
 
-    - name: Publish to GPR
+    steps:
+    - uses: actions/checkout@v3
+
+    - uses: ruby/setup-ruby@v1
+      with:
+        rubygems: latest
+        bundler-cache: true
+
+    - name: Create credentials file
       run: |
         mkdir -p $HOME/.gem
         touch $HOME/.gem/credentials
         chmod 600 $HOME/.gem/credentials
         echo ":github: Bearer ${GITHUB_TOKEN}" >> ~/.gem/credentials
-        gem build *.gemspec
+        echo ":rubygems_api_key: Bearer ${RUBYGEMS_AUTH_TOKEN}" > ~/.gem/credentials
+
+    - name: Build gem
+      run: gem build *.gemspec
+
+    - name: Publish to Github Packages
+      run: |
         gem push --KEY github --host https://rubygems.pkg.github.com/${OWNER} *.gem
       env:
         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
@@ -31,11 +48,6 @@ jobs:
 
     - name: Publish to RubyGems
       run: |
-        mkdir -p $HOME/.gem
-        touch $HOME/.gem/credentials
-        chmod 600 $HOME/.gem/credentials
-        echo ":rubygems_api_key: Bearer ${RUBYGEMS_AUTH_TOKEN}" >> ~/.gem/credentials
-        gem build *.gemspec
         gem push *.gem
       env:
         RUBYGEMS_AUTH_TOKEN: ${{secrets.RUBYGEMS_AUTH_TOKEN}}
