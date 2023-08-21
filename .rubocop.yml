@@ -1,9 +1,15 @@
 require:
   - rubocop-performance
+  - rubocop-rake
   - rubocop-rspec
+
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.0
 
 Metrics/BlockLength:
   Exclude:
     - 'Rakefile'
+    - 'Guardfile'
     - '**/*.gemspec'
     - 'spec/**/*.rb'
