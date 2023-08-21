@@ -16,15 +16,19 @@ gem 'human_enum'
 
 And then execute:
 
-    $ bundle
+```sh
+bundle
+```
 
 Or install it yourself as:
 
-    $ gem install human_enum
+```sh
+gem install human_enum
+```
 
 ## Usage
 
-First, include the concern in your models:
+First, include the concern in your models.
 
 ```ruby
 class MyModel < ApplicationRecord
@@ -32,7 +36,7 @@ class MyModel < ApplicationRecord
 end
 ```
 
-Alternativelly, add it to your `ApplicationRecord` to add the functionality to every model in your application:
+For convenience, you can add it to your `ApplicationRecord` to add the functionality to every model in your application. For models that don't declare `enum` attributes, no extra logic is called.
 
 ```ruby
 class ApplicationRecord < ActiveRecord::Base
@@ -42,15 +46,15 @@ class ApplicationRecord < ActiveRecord::Base
 end
 ```
 
-Declare your enums as you normally would:
+Then declare your enums as you normally would:
 
 ```ruby
 class MyModel < ApplicationRecord
-  enum model_type: [:default, :special]
+  enum model_type: %i[default special]
 end
 ```
 
-And add the enum values to your locale files under the pluralized version of the enum attribute:
+And add the enum values to your locale files under the **pluralized** version of the enum attribute:
 
 ```yaml
 en:
@@ -62,14 +66,16 @@ en:
           special: I am so special
 ```
 
-Then, you can use the helper method `human_[enum_attribute_name]` whenever you need the translated / humanized version of the enum value:
+Note: internally, `human_enum` uses [`i18n_scope`](https://api.rubyonrails.org/classes/ActiveModel/Translation.html#method-i-i18n_scope), so any customizations to your model/I18n setup should be automatically picked up.
+
+Finally, you can use the helper method `human_[enum_attribute_name]` whenever you need the translated/human version of the enum value:
 
 ```ruby
-model = MyModel.new model_type: :special
+model = MyModel.new(model_type: :special)
 puts model.human_model_type # "I am so special"
 ```
 
-To get the translated list of all possible enum values (as a Hash), use the class method `human_[pluralized_enum_attribute_name]`:
+To get the translated list of all possible enum values (as a Hash), use the class method `human_[pluralized_enum_attribute_name]`.
 
 ```ruby
 puts MyModel.human_model_types # "{default: 'Default Type', special: 'I am so special'}"
@@ -79,7 +85,7 @@ puts MyModel.human_model_types # "{default: 'Default Type', special: 'I am so sp
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+To install this gem onto your local machine, run `bundle exec rake install`.
 
 ## Contributing
 
