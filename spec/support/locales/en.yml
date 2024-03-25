@@ -2,6 +2,12 @@ en:
   activerecord:
     attributes:
       test_model:
-        my_enums:
-          value: Custom value
-          other_value: Other custom value
+        shapes:
+          round: Round
+          square: Square
+        colors:
+          red: Redish
+          blue: Bluish
+        sizes:
+          small: Small size
+          large: Large size

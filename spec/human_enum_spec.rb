@@ -3,7 +3,15 @@
 class TestModel < ActiveRecord::Base
   include HumanEnum
 
-  enum my_enum: %i[value other_value]
+  # Old enum syntax
+  enum shape: %i[round square]
+
+  # New enum syntax (Rails 7)
+  enum :color, %i[red blue]
+  enum :size, {
+    small: :small,
+    large: :large,
+  }
 end
 
 RSpec.describe HumanEnum do
@@ -11,44 +19,100 @@ RSpec.describe HumanEnum do
     expect(HumanEnum::VERSION).not_to be nil
   end
 
-  context 'when included' do
-    subject do
-      Class.new(ActiveRecord::Base) do
-        include HumanEnum
+  describe 'Model class method' do
+    context 'shape' do
+      subject(:values) { TestModel.human_shapes }
+
+      let(:expected_values) do
+        {
+          round: 'Round',
+          square: 'Square'
+        }
+      end
+
+      it 'returns a Hash with the translated values' do
+        expect(values).to eq expected_values
       end
     end
 
-    it { is_expected.to respond_to :human_enum_value }
-  end
+    context 'color' do
+      subject(:values) { TestModel.human_colors }
 
-  describe 'Model class method' do
-    subject(:values) { TestModel.human_my_enums }
+      let(:expected_values) do
+        {
+          red: 'Redish',
+          blue: 'Bluish'
+        }
+      end
 
-    let(:expected_values) do
-      {
-        value: 'Custom value',
-        other_value: 'Other custom value'
-      }
+      it 'returns a Hash with the translated values' do
+        expect(values).to eq expected_values
+      end
     end
 
-    it 'returns a Hash with the translated values' do
-      expect(values).to eq expected_values
+    context 'size' do
+      subject(:values) { TestModel.human_sizes }
+
+      let(:expected_values) do
+        {
+          small: 'Small size',
+          large: 'Large size'
+        }
+      end
+
+      it 'returns a Hash with the translated values' do
+        expect(values).to eq expected_values
+      end
     end
   end
 
   describe 'Model instance method' do
-    subject { TestModel.new(params).human_my_enum }
+    context 'shape' do
+      subject { TestModel.new(params).human_shape }
 
-    context 'with a blank value' do
-      let(:params) {}
+      context 'with a blank value' do
+        let(:params) {}
 
-      it { is_expected.to be_nil }
+        it { is_expected.to be_nil }
+      end
+
+      context 'with enum value = :square' do
+        let(:params) { { shape: :square } }
+
+        it { is_expected.to eq 'Square' }
+      end
     end
 
-    context 'with enum value = :other_value' do
-      let(:params) { { my_enum: :other_value } }
+    context 'color' do
+      subject { TestModel.new(params).human_color }
 
-      it { is_expected.to eq 'Other custom value' }
+      context 'with a blank value' do
+        let(:params) {}
+
+        it { is_expected.to be_nil }
+      end
+
+      context 'with enum value = :red' do
+        let(:params) { { color: :red } }
+
+        it { is_expected.to eq 'Redish' }
+      end
+    end
+
+    context 'size' do
+      subject { TestModel.new(params).human_size }
+
+      context 'with a blank value' do
+        let(:params) {}
+
+        it { is_expected.to be_nil }
+      end
+
+      context 'with enum value = :large' do
+        let(:params) { { size: :large } }
+
+        it { is_expected.to eq 'Large size' }
+      end
     end
   end
 end
