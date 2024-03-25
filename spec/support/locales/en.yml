@@ -5,3 +5,9 @@ en:
         shapes:
           round: Round
           square: Square
+        colors:
+          red: Redish
+          blue: Bluish
+        sizes:
+          small: Small size
+          large: Large size

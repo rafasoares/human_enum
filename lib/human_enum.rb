@@ -34,10 +34,12 @@ module HumanEnum
   extend ActiveSupport::Concern
 
   class_methods do
-    def enum(definitions)
+    def enum(name = nil, values = nil, **options)
       super
 
-      name = definitions.keys.reject { |key, _| key.start_with? '_'}.first
+      if name.nil?
+        name = options.keys.reject { |key, _| key.start_with? '_'}.first
+      end
 
       define_method "human_#{name}" do
         value = send name
