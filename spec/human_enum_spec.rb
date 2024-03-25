@@ -11,16 +11,6 @@ RSpec.describe HumanEnum do
     expect(HumanEnum::VERSION).not_to be nil
   end
 
-  context 'when included' do
-    subject do
-      Class.new(ActiveRecord::Base) do
-        include HumanEnum
-      end
-    end
-
-    it { is_expected.to respond_to :human_enum_value }
-  end
-
   describe 'Model class method' do
     subject(:values) { TestModel.human_my_enums }
 

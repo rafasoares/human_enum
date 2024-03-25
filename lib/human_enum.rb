@@ -13,49 +13,40 @@ require 'active_record/enum'
 # models
 
 # [ActiveRecord]: https://api.rubyonrails.org/v5.2.3/classes/ActiveRecord/Enum.html
+
+def humanize(name, value, scope, ancestors)
+  attributes_scope = "#{scope}.attributes"
+  enum_key = value ? "#{name.to_s.pluralize}.#{value}" : name.to_s.pluralize
+
+  defaults = ancestors.map do |klass|
+    :"#{attributes_scope}.#{klass.model_name.i18n_key}.#{enum_key}"
+  end
+
+  defaults << :"attributes.#{enum_key}"
+  defaults << value.to_s.humanize
+
+  I18n.translate defaults.shift, default: defaults
+end
+
 module HumanEnum
   class Error < StandardError; end
 
   extend ActiveSupport::Concern
 
-  included do
-    def human_enum_value(enum_name)
-      enum_value = send enum_name
-      self.class.human_enum_value(enum_name, enum_value) unless enum_value.nil?
-    end
-  end
-
   class_methods do
     def enum(definitions)
-      super definitions
+      super
 
-      definitions.keys.without(:_prefix, :_suffix).each do |name|
-        human_enum name
-      end
-    end
+      name = definitions.keys.reject { |key, _| key.start_with? '_'}.first
 
-    def human_enum_value(enum_name, enum_value)
-      attributes_scope = "#{i18n_scope}.attributes"
-      enum_key = "#{enum_name.to_s.pluralize}.#{enum_value}"
-
-      defaults = lookup_ancestors.map do |klass|
-        :"#{attributes_scope}.#{klass.model_name.i18n_key}.#{enum_key}"
+      define_method "human_#{name}" do
+        value = send name
+        humanize name, value, self.class.i18n_scope, self.class.lookup_ancestors unless value.nil?
       end
 
-      defaults << :"attributes.#{enum_key}"
-      defaults << enum_value.to_s.humanize
-
-      I18n.translate defaults.shift, default: defaults
-    end
-
-    def human_enum(enum_name)
-      send :define_method, "human_#{enum_name}" do
-        human_enum_value enum_name
-      end
-
-      collection_name = enum_name.to_s.pluralize
+      collection_name = name.to_s.pluralize
       self.class.send :define_method, "human_#{collection_name}" do
-        human_enum_value enum_name, nil
+        humanize name, nil, i18n_scope, lookup_ancestors
       end
     end
   end
