@@ -3,7 +3,7 @@
 class TestModel < ActiveRecord::Base
   include HumanEnum
 
-  enum my_enum: %i[value other_value]
+  enum shape: %i[round square]
 end
 
 RSpec.describe HumanEnum do
@@ -12,12 +12,12 @@ RSpec.describe HumanEnum do
   end
 
   describe 'Model class method' do
-    subject(:values) { TestModel.human_my_enums }
+    subject(:values) { TestModel.human_shapes }
 
     let(:expected_values) do
       {
-        value: 'Custom value',
-        other_value: 'Other custom value'
+        round: 'Round',
+        square: 'Square'
       }
     end
 
@@ -27,7 +27,7 @@ RSpec.describe HumanEnum do
   end
 
   describe 'Model instance method' do
-    subject { TestModel.new(params).human_my_enum }
+    subject { TestModel.new(params).human_shape }
 
     context 'with a blank value' do
       let(:params) {}
@@ -35,10 +35,10 @@ RSpec.describe HumanEnum do
       it { is_expected.to be_nil }
     end
 
-    context 'with enum value = :other_value' do
-      let(:params) { { my_enum: :other_value } }
+    context 'with enum value = :square' do
+      let(:params) { { shape: :square } }
 
-      it { is_expected.to eq 'Other custom value' }
+      it { is_expected.to eq 'Square' }
     end
   end
 end

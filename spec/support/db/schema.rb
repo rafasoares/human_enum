@@ -2,6 +2,6 @@
 
 ActiveRecord::Schema.define do
   create_table 'test_models' do |t|
-    t.string 'my_enum'
+    t.string 'shape'
   end
 end
