@@ -46,7 +46,8 @@ Declare your enums as you normally would:
 
 ```ruby
 class MyModel < ApplicationRecord
-  enum model_type: [:default, :special]
+  enum model_type: [:default, :special]  # Rails < 7
+  enum :model_type, [:default, :special] # Rails >= 7
 end
 ```
 
