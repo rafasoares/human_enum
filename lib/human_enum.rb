@@ -13,21 +13,6 @@ require 'active_record/enum'
 # models
 
 # [ActiveRecord]: https://api.rubyonrails.org/v5.2.3/classes/ActiveRecord/Enum.html
-
-def humanize(name, value, scope, ancestors)
-  attributes_scope = "#{scope}.attributes"
-  enum_key = value ? "#{name.to_s.pluralize}.#{value}" : name.to_s.pluralize
-
-  defaults = ancestors.map do |klass|
-    :"#{attributes_scope}.#{klass.model_name.i18n_key}.#{enum_key}"
-  end
-
-  defaults << :"attributes.#{enum_key}"
-  defaults << value.to_s.humanize
-
-  I18n.translate defaults.shift, default: defaults
-end
-
 module HumanEnum
   class Error < StandardError; end
 
@@ -41,14 +26,28 @@ module HumanEnum
         name = options.keys.reject { |key, _| key.start_with? '_'}.first
       end
 
+      humanize = lambda do |name, value, scope, ancestors|
+        attributes_scope = "#{scope}.attributes"
+        enum_key = value ? "#{name.to_s.pluralize}.#{value}" : name.to_s.pluralize
+
+        defaults = ancestors.map do |klass|
+          :"#{attributes_scope}.#{klass.model_name.i18n_key}.#{enum_key}"
+        end
+
+        defaults << :"attributes.#{enum_key}"
+        defaults << value.to_s.humanize
+
+        I18n.translate defaults.shift, default: defaults
+      end
+
       define_method "human_#{name}" do
         value = send name
-        humanize name, value, self.class.i18n_scope, self.class.lookup_ancestors unless value.nil?
+        humanize.call name, value, self.class.i18n_scope, self.class.lookup_ancestors unless value.nil?
       end
 
       collection_name = name.to_s.pluralize
       self.class.send :define_method, "human_#{collection_name}" do
-        humanize name, nil, i18n_scope, lookup_ancestors
+        humanize.call name, nil, i18n_scope, lookup_ancestors
       end
     end
   end
