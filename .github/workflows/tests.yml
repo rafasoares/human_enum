@@ -1,69 +1,49 @@
-name: Tests
-
 on:
   push:
-    branches: [master, develop]
+    branches: [main, develop]
   pull_request:
-    branches: [master, develop]
+    branches: [main, develop]
+  workflow_call:
+
+permissions:
+  contents: read
 
 jobs:
-  rspec:
-    name: RSpec
+  test:
+    name: Run specs
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
+
     - uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 3.2
-    - uses: actions/cache@v1
-      with:
-        path: vendor/bundle
-        key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-gems-
-    - name: Update Bundler
-      run: gem install bundler:2.0.2
-    - name: Setup SQLite
-      run: sudo apt-get install libsqlite3-dev
-    - name: Bundle install
-      run: |
-        bundle config deployment true
-        bundle config path vendor/bundle
-        bin/setup
+        rubygems: latest
+        bundler-cache: true
+
     - name: Run specs
-      run: bin/rake spec
-    - uses: actions/upload-artifact@v1.0.0
+      env:
+        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+      run: bin/rspec
+
+    - uses: actions/upload-artifact@v4
       with:
         name: code-coverage
         path: coverage
 
   coverage:
-    name: Code Coverage
-    needs: rspec
+    name: Report code coverage
+    needs: test
     runs-on: ubuntu-latest
-    env:
-      CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+
     steps:
-      - uses: actions/checkout@v2
-      - name: Extract branch name
-        id: extract_branch
-        env:
-          branch: ${{ github.head_ref || github.ref }}
-        run: echo "##[set-output name=branch;]$(echo ${branch#refs/heads/})"
-      - name: Download and setup Code Climate Test Reporter
-        env:
-          GIT_BRANCH: ${{steps.extract_branch.outputs.branch}}
-          GIT_COMMIT_SHA: ${{ github.sha }}
-        run: |
-          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-          chmod +x ./cc-test-reporter
-          ./cc-test-reporter before-build
-      - uses: actions/download-artifact@v1.0.0
-        with:
-          name: code-coverage
-          path: coverage
-      - name: Upload coverage report to Code Climate
-        env:
-          GIT_BRANCH: ${{steps.extract_branch.outputs.branch}}
-          GIT_COMMIT_SHA: ${{ github.sha }}
-        run: ./cc-test-reporter after-build -t simplecov
+    - uses: actions/checkout@v3
+
+    - uses: actions/download-artifact@v4
+      with:
+        name: code-coverage
+        path: coverage
+
+    - uses: paambaati/codeclimate-action@v6
+      env:
+        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}

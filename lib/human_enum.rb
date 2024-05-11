@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'human_enum/version'
+require 'active_support'
 require 'active_support/concern'
 require 'active_support/core_ext/array'
 require 'active_model/naming'
@@ -45,7 +46,7 @@ module HumanEnum
       defaults << :"attributes.#{enum_key}"
       defaults << enum_value.to_s.humanize
 
-      I18n.translate defaults.shift, default: defaults
+      I18n.t defaults.shift, default: defaults
     end
 
     def human_enum(enum_name)
