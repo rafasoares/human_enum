@@ -12,7 +12,7 @@ gem 'sqlite3', '~> 1.4'
 gem 'rspec', '~> 3.12'
 
 # Should match the version in .codeclimate.yml
-gem 'rubocop', '~> 1.56.3'
+gem 'rubocop', '~> 1.63.5'
 gem 'rubocop-performance'
 gem 'rubocop-rails'
 gem 'rubocop-rake'
