@@ -13,9 +13,6 @@ jobs:
     name: Run specs
     runs-on: ubuntu-latest
 
-    env:
-      CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-
     steps:
     - uses: actions/checkout@v4
 
@@ -25,6 +22,8 @@ jobs:
         bundler-cache: true
 
     - name: Run specs
+      env:
+        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
       run: bin/rspec
 
     - uses: actions/upload-artifact@v4
@@ -46,3 +45,5 @@ jobs:
         path: coverage
 
     - uses: paambaati/codeclimate-action@v6
+      env:
+        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}

@@ -26,4 +26,3 @@ gem 'guard-rspec', '~> 4.7'
 gem 'guard-rubocop', '~> 1.5'
 
 gem 'simplecov', '~> 0.22.0'
-gem 'simplecov_json_formatter', '~> 0.1.4'

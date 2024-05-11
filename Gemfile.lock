@@ -167,7 +167,6 @@ DEPENDENCIES
   ruby-lsp-rails
   ruby-lsp-rspec
   simplecov (~> 0.22.0)
-  simplecov_json_formatter (~> 0.1.4)
   sqlite3 (~> 1.4)
 
 BUNDLED WITH
