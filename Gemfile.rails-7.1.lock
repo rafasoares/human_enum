@@ -172,7 +172,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  activerecord (~> 7.1)
+  activerecord (~> 7.1.0)
   guard (~> 2.18)
   guard-rspec (~> 4.7)
   guard-rubocop (~> 1.5)
