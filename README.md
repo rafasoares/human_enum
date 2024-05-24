@@ -2,7 +2,7 @@
 
 This gem allows you to specify enum value translations in your I18n locale files like any other ActiveRecord attribute and adds helper methods to get humanized translations of enum values.
 
-![Tests](https://github.com/rafasoares/human_enum/workflows/Tests/badge.svg)
+[![Tests](https://github.com/rafasoares/human_enum/actions/workflows/tests.yml/badge.svg)](https://github.com/rafasoares/human_enum/actions/workflows/tests.yml)
 [![Maintainability](https://api.codeclimate.com/v1/badges/b1caef25c888cde6688e/maintainability)](https://codeclimate.com/github/rafasoares/human_enum/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/b1caef25c888cde6688e/test_coverage)](https://codeclimate.com/github/rafasoares/human_enum/test_coverage)
 
@@ -58,6 +58,10 @@ Then declare your enums as you normally would:
 
 ```ruby
 class MyModel < ApplicationRecord
+  # For Rails 7+
+  enum :model_type, %i[default special]
+
+  # For Rails 6
   enum model_type: %i[default special]
 end
 ```

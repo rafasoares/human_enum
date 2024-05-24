@@ -2,8 +2,28 @@
 
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in human_enum.gemspec
 gemspec
+
+plugin 'bundler-multilock', '~> 1.3'
+return unless Plugin.installed?('bundler-multilock')
+
+Plugin.send(:load_plugin, 'bundler-multilock')
+
+lockfile do
+  gem 'activerecord', '~> 7.1' # rubocop:disable Bundler/DuplicatedGem
+end
+
+lockfile 'rails-6.1' do
+  gem 'activerecord', '~> 6.1.0' # rubocop:disable Bundler/DuplicatedGem
+end
+
+lockfile 'rails-7.0' do
+  gem 'activerecord', '~> 7.0.0' # rubocop:disable Bundler/DuplicatedGem
+end
+
+lockfile 'rails-7.1' do
+  gem 'activerecord', '~> 7.1.0' # rubocop:disable Bundler/DuplicatedGem
+end
 
 gem 'rake', '~> 13.0'
 
