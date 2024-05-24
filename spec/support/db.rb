@@ -11,7 +11,10 @@ RSpec.configure do |_config|
 
   ActiveRecord::Schema.define do
     create_table 'test_models' do |t|
-      t.string 'my_enum'
+      t.integer 'size'
+      t.string 'color'
+      t.string 'shape'
+      t.string 'direction'
     end
   end
 end

@@ -58,6 +58,10 @@ Then declare your enums as you normally would:
 
 ```ruby
 class MyModel < ApplicationRecord
+  # For Rails 7+
+  enum :model_type, %i[default special]
+
+  # For Rails 6
   enum model_type: %i[default special]
 end
 ```

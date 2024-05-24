@@ -9,4 +9,4 @@ end
 require 'bundler/setup'
 require 'human_enum'
 
-Dir[File.join(__dir__, 'support', '*.rb')].each { |f| require f }
+Dir[File.join(__dir__, 'support', '**', '*.rb')].each { |f| require f }

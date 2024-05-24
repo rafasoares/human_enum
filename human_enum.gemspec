@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Rafael Soares']
   spec.email         = ['893971+rafasoares@users.noreply.github.com']
 
-  # Should always be the lowest maint version of Ruby
+  # Should always be the lowest maintained version of Ruby
   spec.required_ruby_version = '>= 3.0.0'
 
   spec.summary       = 'Adds simple and easy I18n support for Rails enums'
@@ -32,5 +32,5 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'activerecord', '>= 6.1', '< 7'
+  spec.add_dependency 'activerecord', '>= 6.1', '< 8'
 end

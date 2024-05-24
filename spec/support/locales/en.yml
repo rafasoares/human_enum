@@ -1,7 +1,13 @@
 en:
+  attributes:
+    directions:
+      north: "Up?"
   activerecord:
     attributes:
       test_model:
-        my_enums:
-          value: Custom value
-          other_value: Other custom value
+        shapes:
+          circle: "You spin me right round, baby"
+          triangle: "Pointy boi"
+        colors:
+          red: "Red"
+          blue: "Violets are blue"

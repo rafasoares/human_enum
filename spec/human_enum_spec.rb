@@ -2,55 +2,38 @@
 
 require 'setup_helper'
 
-class TestModel < ActiveRecord::Base
-  include HumanEnum
-
-  enum my_enum: %i[value other_value]
-end
-
 RSpec.describe HumanEnum do
   it 'has a version number' do
     expect(HumanEnum::VERSION).not_to be_nil
   end
 
-  context 'when included' do
-    subject do
-      Class.new(ActiveRecord::Base) do
-        include HumanEnum
+  if ActiveRecord.gem_version < '7.2'
+    context 'with Rails < 7 syntax' do
+      context 'with an array of values' do
+        include_examples 'translations', :size,
+                         small: 'Small', medium: 'Medium', large: 'Large'
+      end
+
+      context 'with a Hash of values' do
+        include_examples 'translations', :color,
+                         red: 'Red', blue: 'Violets are blue'
       end
     end
-
-    it { is_expected.to respond_to :human_enum_value }
   end
 
-  describe 'Model class methods' do
-    subject(:values) { TestModel.human_my_enums }
+  if ActiveRecord.gem_version >= '7'
+    context 'with Rails >= 7 syntax' do
+      context 'with an array of values' do
+        include_examples 'translations', :shape,
+                         square: 'Square',
+                         circle: 'You spin me right round, baby',
+                         triangle: 'Pointy boi'
+      end
 
-    let(:expected_values) do
-      {
-        value: 'Custom value',
-        other_value: 'Other custom value'
-      }
-    end
-
-    it 'returns a Hash with the translated values' do
-      expect(values).to eq expected_values
-    end
-  end
-
-  describe 'Model instance method' do
-    subject { TestModel.new(params).human_my_enum }
-
-    context 'with a blank value' do
-      let(:params) { {} }
-
-      it { is_expected.to be_nil }
-    end
-
-    context 'with enum value = :other_value' do
-      let(:params) { { my_enum: :other_value } }
-
-      it { is_expected.to eq 'Other custom value' }
+      context 'with a Hash of values' do
+        include_examples 'translations', :direction,
+                         north: 'Up?', south: 'South', east: 'East', west: 'West'
+      end
     end
   end
 end
