@@ -21,7 +21,7 @@ module HumanEnum
   extend ActiveSupport::Concern
 
   class << self
-    def deprecator = @deprecator ||= ActiveSupport::Deprecation.new('1.0', 'HumanEnum')
+    def deprecator = @deprecator ||= ActiveSupport::Deprecation.new('2.0', 'HumanEnum')
   end
 
   included do
