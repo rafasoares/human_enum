@@ -25,9 +25,18 @@ module HumanEnum
   end
 
   included do
-    def human_enum_value(enum_name)
-      _translate_enum(enum_name)
+    # DEPRECATED: This method is deprecated and will be removed in future versions.
+    #
+    # Returns the human-readable value of the specified enum.
+    #
+    # @param enum_name [Symbol] The name of the enum.
+    # @return [String] The human-readable value of the enum.
+    # @deprecated Use `human_<enum_name>` instead.
+    # :nocov:
+    def human_enum_value(enum_name, enum_value)
+      _translate_enum(enum_name, enum_value)
     end
+    # :nocov:
 
     deprecate(human_enum_value: 'use `human_<enum_name>` instead', deprecator: HumanEnum.deprecator)
 
@@ -43,12 +52,23 @@ module HumanEnum
       super(...).tap { humanize_enums }
     end
 
+    # DEPRECATED: This method is deprecated and will be removed in future versions.
+    #
+    # Translates the given enum value into a human-readable string.
+    #
+    # @param enum_name [Symbol] The name of the enum.
+    # @param enum_value [Symbol] The value of the enum.
+    # @return [String] The human-readable string representation of the enum value.
+    # @deprecated Use `human_<plural_enum_name>` instead.
+    # :nocov:
     def human_enum_value(enum_name, enum_value)
       _translate_enum(enum_name, enum_value)
     end
+    # :nocov:
 
     deprecate(human_enum_value: 'use `human_<plural_enum_name>` instead', deprecator: HumanEnum.deprecator)
 
+    # Goes through all enums defined in the model and creates the necessary methods, if they don't exist yet.
     def humanize_enums
       defined_enums.each do |enum_name, values|
         _define_instance_method(enum_name)
