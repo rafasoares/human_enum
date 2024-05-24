@@ -35,12 +35,6 @@ jobs:
         CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
       run: bin/rspec
 
-    - uses: actions/upload-artifact@v4
-      with:
-        name: code-coverage
-        path: coverage
-        overwrite: true
-
   coverage:
     name: Report code coverage
     needs: test
@@ -49,11 +43,18 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - uses: actions/download-artifact@v4
+    - uses: ruby/setup-ruby@v1
+      with:
+        rubygems: latest
+        bundler-cache: true
+
+    - uses: paambaati/codeclimate-action@v6
+      with:
+        coverageCommand: bin/rspec
+      env:
+        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+
+    - uses: actions/upload-artifact@v4
       with:
         name: code-coverage
         path: coverage
-
-    - uses: paambaati/codeclimate-action@v6
-      env:
-        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
