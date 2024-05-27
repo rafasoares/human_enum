@@ -1,16 +1,19 @@
+name: tests
+
 on:
   push:
-    branches: [main, develop]
+    branches: [main]
   pull_request:
-    branches: [main, develop]
+    branches: [main]
   workflow_call:
 
 permissions:
   contents: read
 
 jobs:
-  test:
-    name: Run specs
+  test-matrix:
+    name: Test against Ruby ${{ matrix.ruby }} and Rails ${{ matrix.rails }}
+
     runs-on: ubuntu-latest
 
     strategy:
@@ -33,11 +36,12 @@ jobs:
     - name: Run specs
       env:
         CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-      run: bin/rspec
+      run: bin/rspec --no-profile
 
-  coverage:
-    name: Report code coverage
-    needs: test
+  test-current:
+    name: Run specs against current Ruby and Rails
+    needs: test-matrix
+
     runs-on: ubuntu-latest
 
     steps:
@@ -48,13 +52,16 @@ jobs:
         rubygems: latest
         bundler-cache: true
 
-    - uses: paambaati/codeclimate-action@v6
-      with:
-        coverageCommand: bin/rspec
-      env:
-        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+    - run: bin/rspec --format json --out spec/reports/rspec.json
 
-    - uses: actions/upload-artifact@v4
+    - name: Upload test reports
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-results
+        path: spec/reports
+
+    - name: Upload code coverage
+      uses: actions/upload-artifact@v4
       with:
         name: code-coverage
         path: coverage
