@@ -21,7 +21,7 @@ jobs:
       - uses: dorny/test-reporter@v1
         with:
           name: rspec
-          path: spec/reports
+          path: spec/reports/*.json
           artifact: test-results
           reporter: rspec-json
 
@@ -34,6 +34,7 @@ jobs:
         with:
           name: code-coverage
           path: coverage
+          run-id: ${{ github.event.workflow_run.id }}
 
       - uses: paambaati/codeclimate-action@v6
         env:
