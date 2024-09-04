@@ -11,8 +11,36 @@ permissions:
   contents: read
 
 jobs:
+  test-current:
+    name: Run specs against current Ruby and Rails
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: ruby/setup-ruby@v1
+      with:
+        rubygems: latest
+        bundler-cache: true
+
+    - name: Run tests and upload code coverage to Code Climate
+      uses: paambaati/codeclimate-action@v6
+      env:
+        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+      with:
+        coverageCommand: bin/rspec --format json --out spec/reports/rspec.json
+
+    - name: Upload test results
+      uses: actions/upload-artifact@v4
+      if: success() || failure()
+      with:
+        name: test-results
+        path: spec/reports/rspec.json
+
   test-matrix:
     name: Test against Ruby ${{ matrix.ruby }} and Rails ${{ matrix.rails }}
+    needs: test-current
 
     runs-on: ubuntu-latest
 
@@ -34,34 +62,4 @@ jobs:
         bundler-cache: true
 
     - name: Run specs
-      env:
-        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
       run: bin/rspec --no-profile
-
-  test-current:
-    name: Run specs against current Ruby and Rails
-    needs: test-matrix
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v4
-
-    - uses: ruby/setup-ruby@v1
-      with:
-        rubygems: latest
-        bundler-cache: true
-
-    - run: bin/rspec --format json --out spec/reports/rspec.json
-
-    - name: Upload test reports
-      uses: actions/upload-artifact@v4
-      with:
-        name: test-results
-        path: spec/reports
-
-    - name: Upload code coverage
-      uses: actions/upload-artifact@v4
-      with:
-        name: code-coverage
-        path: coverage

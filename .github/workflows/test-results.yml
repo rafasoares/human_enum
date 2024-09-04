@@ -1,0 +1,26 @@
+name: test-results
+
+on:
+  workflow_run:
+    workflows: ["tests"]
+    types:
+      - completed
+
+permissions:
+  contents: read
+  actions: read
+  checks: write
+
+jobs:
+  report:
+    name: Report test results
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: dorny/test-reporter@v1
+        with:
+          name: rspec
+          path: "*.json"
+          artifact: test-results
+          reporter: rspec-json
