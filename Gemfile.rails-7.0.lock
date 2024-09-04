@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    human_enum (1.1.0)
+    human_enum (1.1.1)
       activerecord (>= 6.1, < 8)
 
 GEM
