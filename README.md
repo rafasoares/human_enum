@@ -9,7 +9,7 @@ This gem allows you to specify enum value translations in your I18n locale files
 ## Requirements
 
 This gem only supports actively maintained versions of Ruby and Rails. Currently, that is:
-* Ruby 3.0+
+* Ruby 3.1+
 * Rails 6.1+
 
 It may work with older versions, but it is not officially supported.
