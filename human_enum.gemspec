@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['893971+rafasoares@users.noreply.github.com']
 
   # Should always be the lowest maintained version of Ruby
-  spec.required_ruby_version = '>= 3.0.0'
+  spec.required_ruby_version = '>= 3.1'
 
   spec.summary       = 'Adds simple and easy I18n support for Rails enums'
   spec.description   = 'This gem allows you to specify enum value translations
