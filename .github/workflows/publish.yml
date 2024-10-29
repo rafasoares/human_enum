@@ -1,11 +1,8 @@
 name: publish
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - lib/human_enum/version.rb
+  release:
+    types: [published]
 
 permissions:
   packages: write
