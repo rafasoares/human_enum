@@ -10,7 +10,7 @@ return unless Plugin.installed?('bundler-multilock')
 Plugin.send(:load_plugin, 'bundler-multilock')
 
 lockfile do
-  gem 'activerecord', '~> 7.1'
+  gem 'activerecord', '~> 7.2'
 end
 
 lockfile 'rails-6.1' do
@@ -23,6 +23,10 @@ end
 
 lockfile 'rails-7.1' do
   gem 'activerecord', '~> 7.1.0' # rubocop:disable Bundler/DuplicatedGem
+end
+
+lockfile 'rails-7.2' do
+  gem 'activerecord', '~> 7.2.0' # rubocop:disable Bundler/DuplicatedGem
 end
 
 gem 'rake', '~> 13.0'
