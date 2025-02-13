@@ -29,6 +29,10 @@ lockfile 'rails-7.2' do
   gem 'activerecord', '~> 7.2.0' # rubocop:disable Bundler/DuplicatedGem
 end
 
+lockfile 'rails-8.0' do
+  gem 'activerecord', '~> 8.0.0' # rubocop:disable Bundler/DuplicatedGem
+end
+
 gem 'rake', '~> 13.0'
 
 gem 'sqlite3', '~> 1.4'
