@@ -10,29 +10,36 @@ return unless Plugin.installed?('bundler-multilock')
 Plugin.send(:load_plugin, 'bundler-multilock')
 
 lockfile do
-  gem 'activerecord', '~> 7.2'
+  gem 'activerecord', '~> 8.0'
+  gem 'sqlite3', '~> 2.0'
 end
 
 lockfile 'rails-6.1' do
   gem 'activerecord', '~> 6.1.0' # rubocop:disable Bundler/DuplicatedGem
+  gem 'sqlite3', '~> 1.4' # rubocop:disable Bundler/DuplicatedGem
 end
 
 lockfile 'rails-7.0' do
   gem 'activerecord', '~> 7.0.0' # rubocop:disable Bundler/DuplicatedGem
+  gem 'sqlite3', '~> 1.4' # rubocop:disable Bundler/DuplicatedGem
 end
 
 lockfile 'rails-7.1' do
   gem 'activerecord', '~> 7.1.0' # rubocop:disable Bundler/DuplicatedGem
+  gem 'sqlite3', '~> 2.0' # rubocop:disable Bundler/DuplicatedGem
 end
 
 lockfile 'rails-7.2' do
   gem 'activerecord', '~> 7.2.0' # rubocop:disable Bundler/DuplicatedGem
+  gem 'sqlite3', '~> 2.0' # rubocop:disable Bundler/DuplicatedGem
+end
+
+lockfile 'rails-8.0' do
+  gem 'activerecord', '~> 8.0.0' # rubocop:disable Bundler/DuplicatedGem
+  gem 'sqlite3', '~> 2.0' # rubocop:disable Bundler/DuplicatedGem
 end
 
 gem 'rake', '~> 13.0'
-
-gem 'sqlite3', '~> 1.4'
-
 gem 'rspec', '~> 3.12'
 
 # Should match the version in .codeclimate.yml
