@@ -34,6 +34,10 @@ RSpec.describe HumanEnum do
         include_examples 'translations', :direction,
                          north: 'Up?', south: 'South', east: 'East', west: 'West'
       end
+
+      context 'with multiple models using the same enum name' do
+        include_examples 'multiple models'
+      end
     end
   end
 end

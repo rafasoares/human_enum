@@ -49,7 +49,7 @@ module HumanEnum
 
   class_methods do # rubocop:disable Metrics/BlockLength
     def enum(...)
-      super(...).tap { humanize_enums }
+      super.tap { humanize_enums }
     end
 
     # DEPRECATED: This method is deprecated and will be removed in future versions.
@@ -104,7 +104,7 @@ module HumanEnum
       collection_name = enum_name.to_s.pluralize
       return if respond_to?(:"human_#{collection_name}")
 
-      self.class.send :define_method, "human_#{collection_name}" do
+      define_singleton_method :"human_#{collection_name}" do
         values.to_h { |key, _| [key.to_sym, _translate_enum(enum_name, key)] }
       end
     end
