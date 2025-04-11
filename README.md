@@ -5,8 +5,8 @@ like any other ActiveRecord attribute and adds helper methods to get humanized
 translations of enum values.
 
 [![Tests](https://github.com/rafasoares/human_enum/actions/workflows/tests.yml/badge.svg)](https://github.com/rafasoares/human_enum/actions/workflows/tests.yml)
-[![Maintainability](https://api.codeclimate.com/v1/badges/b1caef25c888cde6688e/maintainability)](https://codeclimate.com/github/rafasoares/human_enum/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/b1caef25c888cde6688e/test_coverage)](https://codeclimate.com/github/rafasoares/human_enum/test_coverage)
+[![Maintainability](https://qlty.sh/badges/47201466-7abe-4ec2-a763-205f6b0ad5fd/maintainability.svg)](https://qlty.sh/gh/rafasoares/projects/human_enum)
+[![Code Coverage](https://qlty.sh/badges/47201466-7abe-4ec2-a763-205f6b0ad5fd/test_coverage.svg)](https://qlty.sh/gh/rafasoares/projects/human_enum)
 
 ## Requirements
 
