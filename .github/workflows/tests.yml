@@ -24,12 +24,13 @@ jobs:
         rubygems: latest
         bundler-cache: true
 
-    - name: Run tests and upload code coverage to Code Climate
-      uses: paambaati/codeclimate-action@v6
-      env:
-        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+    - name: Run specs
+      run: bin/rspec --format json --out spec/reports/rspec.json
+
+    - uses: qltysh/qlty-action/coverage@main
       with:
-        coverageCommand: bin/rspec --format json --out spec/reports/rspec.json
+        coverage-token: ${{ secrets.QLTY_COVERAGE_TOKEN }}
+        files: coverage/coverage.json
 
     - name: Upload test results
       uses: actions/upload-artifact@v4

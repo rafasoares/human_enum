@@ -1,6 +1,8 @@
 # HumanEnum
 
-This gem allows you to specify enum value translations in your I18n locale files like any other ActiveRecord attribute and adds helper methods to get humanized translations of enum values.
+This gem allows you to specify enum value translations in your I18n locale files
+like any other ActiveRecord attribute and adds helper methods to get humanized
+translations of enum values.
 
 [![Tests](https://github.com/rafasoares/human_enum/actions/workflows/tests.yml/badge.svg)](https://github.com/rafasoares/human_enum/actions/workflows/tests.yml)
 [![Maintainability](https://api.codeclimate.com/v1/badges/b1caef25c888cde6688e/maintainability)](https://codeclimate.com/github/rafasoares/human_enum/maintainability)
@@ -9,6 +11,7 @@ This gem allows you to specify enum value translations in your I18n locale files
 ## Requirements
 
 This gem only supports actively maintained versions of Ruby and Rails. Currently, that is:
+
 * Ruby 3.1+
 * Rails 6.1+
 
@@ -44,7 +47,9 @@ class MyModel < ApplicationRecord
 end
 ```
 
-For convenience, you can add it to your `ApplicationRecord` to add the functionality to every model in your application. For models that don't declare `enum` attributes, no extra logic is called.
+For convenience, you can add it to your `ApplicationRecord` to add the
+functionality to every model in your application. For models that don't declare
+`enum` attributes, no extra logic is called.
 
 ```ruby
 class ApplicationRecord < ActiveRecord::Base
@@ -66,7 +71,8 @@ class MyModel < ApplicationRecord
 end
 ```
 
-And add the enum values to your locale files under the **pluralized** version of the enum attribute:
+And add the enum values to your locale files under the **pluralized** version of
+the enum attribute:
 
 ```yaml
 en:
@@ -101,8 +107,7 @@ To install this gem onto your local machine, run `bin/rake install`.
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/rafasoares/human_enum. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
-
+Bug reports and pull requests are welcome on GitHub at <https://github.com/rafasoares/human_enum>. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
