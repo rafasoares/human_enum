@@ -35,9 +35,10 @@ RSpec.describe HumanEnum do
                          north: 'Up?', south: 'South', east: 'East', west: 'West'
       end
 
-      context 'with multiple models using the same enum name' do
-        include_examples 'multiple models'
-      end
+      it_behaves_like 'multiple models using the same enum name',
+                      :status,
+                      { active: 'First Active', inactive: 'First Inactive' },
+                      { pending: 'Second Pending', completed: 'Second Completed' }
     end
   end
 end

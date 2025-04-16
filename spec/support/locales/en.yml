@@ -11,3 +11,11 @@ en:
         colors:
           red: "Red"
           blue: "Violets are blue"
+      multiple/first_model:
+        statuses:
+          active: "First Active"
+          inactive: "First Inactive"
+      multiple/second_model:
+        statuses:
+          pending: "Second Pending"
+          completed: "Second Completed"
