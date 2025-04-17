@@ -16,6 +16,9 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    env:
+      QLTY_COVERAGE_TOKEN: ${{ secrets.QLTY_COVERAGE_TOKEN }}
+
     steps:
     - uses: actions/checkout@v4
 
@@ -28,6 +31,7 @@ jobs:
       run: bin/rspec --format json --out spec/reports/rspec.json
 
     - uses: qltysh/qlty-action/coverage@main
+      if: ${{ env.QLTY_COVERAGE_TOKEN != '' }}
       with:
         coverage-token: ${{ secrets.QLTY_COVERAGE_TOKEN }}
         files: coverage/coverage.json
