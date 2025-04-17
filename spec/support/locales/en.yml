@@ -12,10 +12,18 @@ en:
           red: "Red"
           blue: "Violets are blue"
       multiple/first_model:
+        scopes:
+          user: "User scope"
+          account: "Account scope"
+          project: "Project scope"
         statuses:
           active: "First Active"
           inactive: "First Inactive"
       multiple/second_model:
+        scopes:
+          city: "City scope"
+          state: "State scope"
+          country: "Country scope"
         statuses:
           pending: "Second Pending"
           completed: "Second Completed"
