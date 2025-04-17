@@ -18,6 +18,11 @@ RSpec.describe HumanEnum do
         include_examples 'translations', :color,
                          red: 'Red', blue: 'Violets are blue'
       end
+
+      include_examples 'multiple models',
+                       :scope,
+                       first: { user: 'User scope', account: 'Account scope', project: 'Project scope' },
+                       second: { city: 'City scope', state: 'State scope', country: 'Country scope' }
     end
   end
 
@@ -35,10 +40,10 @@ RSpec.describe HumanEnum do
                          north: 'Up?', south: 'South', east: 'East', west: 'West'
       end
 
-      it_behaves_like 'multiple models using the same enum name',
-                      :status,
-                      { active: 'First Active', inactive: 'First Inactive' },
-                      { pending: 'Second Pending', completed: 'Second Completed' }
+      include_examples 'multiple models',
+                       :status,
+                       first: { active: 'First Active', inactive: 'First Inactive' },
+                       second: { pending: 'Second Pending', completed: 'Second Completed' }
     end
   end
 end

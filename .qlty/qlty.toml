@@ -92,9 +92,6 @@ mode = "disabled"
 name = "osv-scanner"
 
 [[plugin]]
-name = "radarlint-ruby"
-
-[[plugin]]
 name = "ripgrep"
 mode = "comment"
 
