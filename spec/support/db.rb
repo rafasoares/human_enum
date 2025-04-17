@@ -16,5 +16,13 @@ RSpec.configure do |_config|
       t.string 'shape'
       t.string 'direction'
     end
+
+    create_table 'first_models' do |t|
+      t.integer 'status'
+    end
+
+    create_table 'second_models' do |t|
+      t.integer 'status'
+    end
   end
 end
