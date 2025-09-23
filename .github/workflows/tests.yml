@@ -9,6 +9,7 @@ on:
 
 permissions:
   contents: read
+  id-token: write
 
 jobs:
   test-current:
@@ -16,11 +17,8 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    env:
-      QLTY_COVERAGE_TOKEN: ${{ secrets.QLTY_COVERAGE_TOKEN }}
-
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
 
     - uses: ruby/setup-ruby@v1
       with:
@@ -30,10 +28,9 @@ jobs:
     - name: Run specs
       run: bin/rspec --format json --out spec/reports/rspec.json
 
-    - uses: qltysh/qlty-action/coverage@main
-      if: ${{ env.QLTY_COVERAGE_TOKEN != '' }}
+    - uses: qltysh/qlty-action/coverage@v2
       with:
-        coverage-token: ${{ secrets.QLTY_COVERAGE_TOKEN }}
+        oidc: true
         files: coverage/coverage.json
 
     - name: Upload test results
@@ -52,12 +49,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ruby: ['3.1', '3.2', '3.3']
-        rails: ['6.1', '7.0', '7.1', '7.2', '8.0']
-        exclude:
-          - ruby: 3.1
-            rails: 8.0
-
+        ruby: ['3.2', '3.3', '3.4']
+        rails: ['7.1', '7.2', '8.0']
     env:
       BUNDLE_LOCKFILE: rails-${{ matrix.rails }}
 

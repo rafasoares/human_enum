@@ -12,8 +12,8 @@ translations of enum values.
 
 This gem only supports actively maintained versions of Ruby and Rails. Currently, that is:
 
-* Ruby 3.1+
-* Rails 6.1+
+* Ruby 3.2+
+* Rails 7.1+
 
 It may work with older versions, but it is not officially supported.
 
