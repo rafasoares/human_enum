@@ -10,7 +10,7 @@ return unless Plugin.installed?('bundler-multilock')
 Plugin.send(:load_plugin, 'bundler-multilock')
 
 lockfile do
-  gem 'activerecord', '~> 8.0'
+  gem 'activerecord', '~> 8.1'
 end
 
 # rubocop:disable Bundler/DuplicatedGem
@@ -24,6 +24,10 @@ end
 
 lockfile 'rails-8.0' do
   gem 'activerecord', '~> 8.0.0'
+end
+
+lockfile 'rails-8.1' do
+  gem 'activerecord', '~> 8.1.0'
 end
 # rubocop:enable Bundler/DuplicatedGem
 
